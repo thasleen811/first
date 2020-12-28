@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static%}
+ 
+{% block content%}
+  <div class="container">
+      <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p><label for="">Username</label>
+            <input type="text" name="username" id="">
+        </p>
+        <p>
+            <label for="">password</label>
+            <input type="password" name="password" id="">
+        </p>
+        
+        <p>
+           <input type="submit"  value="ADD"> 
+        </p>
+      </form>
+  </div>
+{% endblock %}

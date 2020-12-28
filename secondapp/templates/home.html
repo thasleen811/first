@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block content%}
+ <p>welcome</p>
+ 
+  <div class="d-flex">
+    {% for product in products %}
+    <div class="card text-white bg-dark mb-3 m-3" >
+      <div class="card-header">{{product.name}}</div>
+      <div class="card-body">
+        <h4 class="card-title">{{ product.price }}</h4>
+        <img style="width:250px;" src="{{ product.image.url }}" alt="">
+        <p class="card-text">{{ product.description }}</p>
+        
+  
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  
+{% endblock %}
