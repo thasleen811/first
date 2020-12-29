@@ -26,3 +26,7 @@ class Products(models.Model):
         verbose_name_plural='products'
     def __str__(self):
         return self.name    
+class Profile(models.Model):
+    profile_image=models.ImageField(upload_to = 'profiles')
+    user=models.OneToOneField(User,on_delete=models.CASCADE)
+

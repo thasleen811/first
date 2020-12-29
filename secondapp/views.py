@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,HttpResponse
-from .forms import ProductModelForm,RegistrationForm,EditForm
+from .forms import ProductModelForm,RegistrationForm,EditForm,ProfileForm
 from .models import Category,Products
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm,PasswordChangeForm,PasswordResetForm
 from django.contrib.auth.models import User
@@ -39,8 +39,9 @@ def add_product(request):
 def show_product(request,id):
     category=Category.objects.get(id=id)
     products=category.products_set.all()
+    
     context={
-        'products':products
+        'products':products,
     }
     return render(request,'show_product.html',context)
 def edit(request,id):
@@ -65,16 +66,24 @@ def delete(request,id):
             
 def register(request):
   if request.method == "POST":
-    form=RegistrationForm(request.POST) 
+    form=RegistrationForm(request.POST,request.FILES) 
+    form1=ProfileForm(request.POST,request.FILES) 
+
     if form.is_valid():
       
-      form.save()
+      obj=form.save()
+      if form1.is_valid():
+        obj2=form1.save(commit=False)
+        obj2.user=obj
+        obj2.save()
+        
       return redirect("home")  
     else:            
-      return render(request,'register.html',{'form':form})
+      return render(request,'register.html',{'form':form,'form1':form1})
   else:
       form=RegistrationForm()
-      return render(request,'register.html',{'form':form})   
+      form1=ProfileForm()
+      return render(request,'register.html',{'form':form,'form1':form1})   
 def login_page(request):
   if request.method=="POST":
     username=request.POST['username']

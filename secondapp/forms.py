@@ -1,5 +1,5 @@
 from django import forms
-from .models import Products
+from .models import Products,Profile
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django.contrib.auth.models import User
 
@@ -21,4 +21,7 @@ class EditForm(UserChangeForm):
         super().__init__(*args,**kwargs)
         del self.fields['password']       
     
-        
+class ProfileForm(forms.ModelForm) :
+    class Meta:
+        model=Profile
+        fields=['profile_image']      
